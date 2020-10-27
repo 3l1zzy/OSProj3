@@ -1,4 +1,3 @@
-package scheduler;
 import java.util.concurrent.locks.Condition;
 
 /**
@@ -17,17 +16,17 @@ class Job extends Thread {
 
   private final SystemSimulator myOS; // OS
   private final Condition myCondition; // This is associated with the OS's single reentrant lock
-  							//In my solution each Job has its own Condition that the OS simulator
-  							// uses to start that Job.
-  							// When we introduce time-slicing, the Job can be use this to suspend
-  							// itself, passing control back to the OS simulator.
+  				       //In my solution each Job has its own Condition that the OS simulator
+  				       // uses to start that Job.
+  				       // When we introduce time-slicing, the Job can be use this to suspend
+  				       // itself, passing control back to the OS simulator.
   
   private final int burstTime; // job burst time
   private final String name; // name of job
   
   private volatile boolean shouldRun = false; // true if job should be running
   private volatile long startTime; // relativeTime when Job first starts running
-  							// You'll need to use this with Gannt chart calculations
+  				   // You'll need to use this with Gannt chart calculations
   private final JobWorkable work;  // What you want your Job to do as its "work".
   
   /*

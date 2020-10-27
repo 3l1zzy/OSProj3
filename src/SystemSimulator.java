@@ -1,4 +1,3 @@
-package scheduler;
 import java.util.concurrent.locks.ReentrantLock;
 
 /**
@@ -18,7 +17,7 @@ class SystemSimulator extends Thread
   private final Scheduler myScheduler; // scheduler for jobs	
   private volatile boolean jobsRemainToBeSubmitted = true; // true if not all jobs have yet been submitted
   private final ReentrantLock singleThreadMutex;  // Used to guarantee that only
-  						//...one of either the OS or any Job thread is running at any one time.
+  	//...one of either the OS or any Job thread is running at any one time.
   
   // Used to store information to create a Gannt chart
   private final GanntChart chart = new GanntChart(); 

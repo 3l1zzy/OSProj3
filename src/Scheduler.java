@@ -1,5 +1,3 @@
-package scheduler;
-
 /**
  * <p>Title: Scheduler</p>
  * <p>Description: </p>

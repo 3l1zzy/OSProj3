@@ -1,18 +1,16 @@
-package scheduler;
-
 /**
  * <p>Title: FCFSScheduler</p>
  * <p>Description: Component of the simulate operating system that encapsulates FCFS job scheduling.</p>
  * <p>Copyright: Copyright (c) 2015, 2004</p>
  * <p>Company: </p>
  * @author Matt Evett
+ * @student Sarah Yaw
  * @version 2.0
  */
 
 import java.util.concurrent.ConcurrentLinkedQueue;
 
 public class FCFSScheduler extends Scheduler {
-
   /*
    * TO_DO: your data structure to support a FCFS scheduler
    * and the abstract methods of Scheduler
@@ -52,6 +50,12 @@ public class FCFSScheduler extends Scheduler {
 	   */
 	  System.out.println("evidently there is now a job on readyQ");
   }
+
+public void add( Job J ){}
+public void remove( Job J ){}
+public boolean hasJobsQueued(){return true;}
+public synchronized boolean hasRunningJob(){ return( null != currentlyRunningJob);}
+public synchronized void clearRunningJob() {currentlyRunningJob = null;}
 }
   
 
