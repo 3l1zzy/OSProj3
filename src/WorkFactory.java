@@ -6,6 +6,7 @@ package scheduler;
  * The only variability will be in createWork(), which will return
  * an instance of a class that I have created to implement JobWorkable.
  * @author matt
+ * @student Sarah Yaw
  * @version 1.1
  * <p>Copyright: Copyright (c) 2016, 2015, 2004 by Matt Evett</p>
  *

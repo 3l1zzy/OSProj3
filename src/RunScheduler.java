@@ -20,6 +20,7 @@ import java.util.ArrayList;
  * <p>Description: </p>
  * <p>Copyright: Copyright (c) 2015, 2004 by Matt Evett</p>
  * @author Matt Evett
+ * @student Sarah Yaw
  * @version 2.0
  * The main driver for the project.
  */

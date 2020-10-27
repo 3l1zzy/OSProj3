@@ -8,6 +8,7 @@ import java.util.StringTokenizer;
  * <p>Copyright: Copyright (c) 2015, 2004 by Matt Evett</p>
  * <p>Company: </p>
  * @author Matt Evett
+ * @student Sarah Yaw
  * @version 2.0
  * extends Thread: should submit new jobs to a SystemSimulator from time to time.
  * It will run at a higher priority than any Jobs, but lower than the SystemSimulator.

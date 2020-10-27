@@ -15,6 +15,7 @@ package scheduler;
  * and it should not catch InterruptExceptions (or, if it does, it should rethrow
  * them).  
  * @author matt
+ * @student Sarah Yaw
  * @version 1.0
  * <p>Copyright: Copyright (c) 2015 by Matt Evett</p>
  *

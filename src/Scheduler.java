@@ -5,6 +5,7 @@ package scheduler;
  * <p>Description: </p>
  * <p>Copyright: Copyright (c) 2015, 2004 by Matt Evett</p>
  * @author Matt Evett
+ * @student Sarah Yaw
  * @version 2.0
  * Manages the scheduling for the OS.  You'll need to extend this to make a concrete class.
  * It should be possible to make various concrete classes that implement different kinds of

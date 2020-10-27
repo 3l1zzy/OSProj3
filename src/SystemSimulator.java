@@ -7,6 +7,7 @@ import java.util.concurrent.locks.ReentrantLock;
  * <p>Copyright: Copyright (c) 2015, 2004 by Matt Evett</p>
  * <p>Company: </p>
  * @author Matt Evett
+ * @student Sarah Yaw
  * @version 2.0
  * extends Thread: this class simulates the kernel.
  */
