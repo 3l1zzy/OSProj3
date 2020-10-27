@@ -10,48 +10,70 @@ import java.util.ArrayList;
  * simulates the scheduler
  */
 
-public class GanntChart {
-	private long systemStartTime; // wall time when the Gannt chart starts.  Is used
-				      // to display all timings as relative to this time
-	private ArrayList<GanntRecord> events = new ArrayList<GanntRecord>();
+public class GanntChart 
+{
+    private long systemStartTime; 
+    // wall time when the Gannt chart starts.  Is used to display all timings as relative to this time
+    private ArrayList<GanntRecord> events = new ArrayList<GanntRecord>();
 
-	public GanntChart(){
+    public GanntChart()
+    {
 
-	}
+    }
 	
-	public void start(){
-		systemStartTime = System.currentTimeMillis(); // set os start time
-	}
+    public void start()
+    {
+	systemStartTime = System.currentTimeMillis(); // set os start time
+    }
 	
-	public void recordEvent(long startTime, long endTime, String eventDescriptor) {
-		events.add(new GanntRecord(startTime, endTime, eventDescriptor));
-	}
+    public void recordEvent(long startTime, long endTime, String eventDescriptor) 
+    {
+	events.add(new GanntRecord(startTime, endTime, eventDescriptor));
+    }
 	
-	public void end() {
-		long endTime = System.currentTimeMillis();
-	    events.add(new GanntRecord(endTime, endTime, "FINISHED"));
-	}
+    public void end() 
+    {
+	long endTime = System.currentTimeMillis();
+	events.add(new GanntRecord(endTime, endTime, "FINISHED"));
+        print();
+    }
 	
-	public void print() {
-		System.out.println("TO_DO GanntChart.print not yet implemented");
-	}
+    public void print() 
+    {
+        GanntRecord temp;
+        int count = 0;
+	System.out.println("Gannt Chart:");
+        System.out.println("Burst Start   Burst End   Job");
+        while (!events.isEmpty()&&count<events.size())
+        {
+            temp = events.get(count);
+            temp.display();
+            count++;
+        }
+    }
 	
-	/**
-	 * Inner class to record the data of one Gannt chart event
-	 * @author matt
-         * @student Sarah Yaw
-	 *
-	 */
-	private class GanntRecord {
-		long startTime;
-		long endTime;
-		String eventDescriptor;
+    /**
+     * Inner class to record the data of one Gannt chart event
+     * @author matt
+     * @student Sarah Yaw
+     *
+     */
+    private class GanntRecord
+    {
+	long startTime;
+	long endTime;
+	String eventDescriptor;
 		
-		GanntRecord(long start, long end, String descrip){
-			startTime = start;
-			endTime = end;
-			eventDescriptor = descrip;
-		}
+	GanntRecord(long start, long end, String descrip)
+        {
+            startTime = start;
+            endTime = end;
+            eventDescriptor = descrip;
 	}
+        public String display()
+        {
+            return " "+startTime+"   "+endTime+"   "+eventDescriptor;
+        }
+    }
 
 }

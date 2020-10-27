@@ -81,8 +81,10 @@ public void run()
 		 */
 
 		
+        break;// TEMPORARY
     	//Should get to here when that Job completes (calls Exit).
-    } // exit loop, we have no jobs left and none scheduled
+    } 
+    // exit loop, we have no jobs left and none scheduled
     chart.end();
     // print gannt chart
     chart.print();
