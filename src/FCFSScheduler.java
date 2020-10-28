@@ -9,53 +9,88 @@
  */
 
 import java.util.concurrent.ConcurrentLinkedQueue;
+import java.util.*;
 
-public class FCFSScheduler extends Scheduler {
-  /*
-   * TO_DO: your data structure to support a FCFS scheduler
-   * and the abstract methods of Scheduler
-   */
+public class FCFSScheduler extends Scheduler 
+{
+    ArrayList<Job> readyq = new ArrayList<Job>();
+    /*
+    * TO_DO: your data structure to support a FCFS scheduler
+    * and the abstract methods of Scheduler
+    */
     
  
-  /**
-   * If the ready queue is empty, return false.
-   * Otherwise, start the next job in the queue, returning true.  If the queue is empty
-   * return false.
-   * Make the next job in the ready queue run. You should probably
-   * invoke Thread.start() on it.
-   */
-  public boolean makeRun()
-  {
-	  System.out.println("TO_DO: makeRun not yet implemented");
-
-	  /*
-	   * Place code here that gets the next Job from the ready queue and
-	   * invokes start() on it
-	   *
-	   */
-	  return true; // TO_DO ***SHOULDN'T ALWAYS RETURN TRUE***
-  }
+    /**
+    * If the ready queue is empty, return false.
+    * Otherwise, start the next job in the queue, returning true.  If the queue is empty
+    * return false.
+    * Make the next job in the ready queue run. You should probably
+    * invoke Thread.start() on it.
+    */
+    public boolean makeRun()
+    {   /**
+	 * If the ready queue is empty, return false.
+	 * Otherwise, start the next job in the queue, returning true.  If the queue is empty
+	 * return false.
+	 * Make the next job in the ready queue run. You should probably
+	 * invoke Thread.start() on it.
+	 */
+        if(!hasJobsQueued())
+            return false;
+        currentlyRunningJob = readyq.get(0);
+        //currentlyRunningJob.start();
+        return true; // TO_DO ***SHOULDN'T ALWAYS RETURN TRUE***
+    }
   
-  /**
-   * blockTilThereIsAJob()  Invoked by OS simulator when it wants to get a new Job to
-   * run.  Will block if the ready queue is empty until a Job is added to the queue.
-   */
-  public  void  blockTilThereIsAJob() {
-	  if (hasRunningJob()) 
-		  return;
-	  System.out.println("TO_DO: blockTilThereIsAJob not yet implemented");
-	  /*
-	   * Place code here that will cause the calling thread to block until the ready queue
-	   * contains a Job
-	   */
-	  System.out.println("evidently there is now a job on readyQ");
-  }
+    /**
+    * blockTilThereIsAJob()  Invoked by OS simulator when it wants to get a new Job to
+    * run.  Will block if the ready queue is empty until a Job is added to the queue.
+    */
+    public void blockTilThereIsAJob() 
+    {
+        if (!readyq.isEmpty()) 
+            return;
+        System.out.println("FCFSS blockTilThereIsAJob");
+        while(readyq.isEmpty())
+        {
+            try
+            {           
+                System.out.println("FCFSS WAITING");
+                Thread.currentThread().sleep(100);
+            }
+            catch(Exception e)
+            {
+                System.out.println("FCFSS "+e);
+            }
+        }
+        System.out.println("FCFSS evidently there is now a job on readyQ");
+    }
 
-public void add( Job J ){}
-public void remove( Job J ){}
-public boolean hasJobsQueued(){return true;}
-public synchronized boolean hasRunningJob(){ return( null != currentlyRunningJob);}
-public synchronized void clearRunningJob() {currentlyRunningJob = null;}
+    public void add( Job J )
+    {
+        readyq.add(J);
+        System.out.println("FCFSS .add() "+J.getNameOf());
+    }
+    public void remove( Job J )
+    {
+        int index = 0;
+        Job temp = readyq.get(index);
+        while(!readyq.isEmpty()&&J!=temp)
+        {
+            temp = readyq.get(index);
+            index++;
+        }
+        readyq.remove(index);
+    }
+    public boolean hasJobsQueued()
+    {
+        if(!readyq.isEmpty())
+            return true;
+        else
+            return false;
+    }
+    public synchronized boolean hasRunningJob(){ return( currentlyRunningJob != null);}
+    public synchronized void clearRunningJob() {currentlyRunningJob = null;}
 }
   
 

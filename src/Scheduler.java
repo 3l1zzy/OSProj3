@@ -13,7 +13,8 @@
 public abstract class Scheduler {
 	protected volatile Job currentlyRunningJob; // current job
 
-	public synchronized Job getRunningJob() {
+	public synchronized Job getRunningJob() 
+        {
 		return currentlyRunningJob;
 	}
 

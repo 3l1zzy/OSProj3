@@ -18,6 +18,7 @@
  * <p>Copyright: Copyright (c) 2015 by Matt Evett</p>
  *
  */
-public interface JobWorkable {
-	public void doWork();
+public interface JobWorkable 
+{
+    public void doWork();
 }

@@ -35,21 +35,22 @@ public class GanntChart
     {
 	long endTime = System.currentTimeMillis();
 	events.add(new GanntRecord(endTime, endTime, "FINISHED"));
-	System.out.println("Gannt Chart:");
-        System.out.println("Burst Start        Burst End        Job");
-        print();
+        //print();
     }
 	
     public void print() 
     {
         GanntRecord temp;
         int count = 0;
+	System.out.println("------------------Gannt Chart:---------------------");
+        System.out.println("Burst Start       Burst End         Job");
         while (!events.isEmpty()&&count<events.size())
         {
             temp = events.get(count);
             System.out.println(temp.display());
             count++;
         }
+	System.out.println("---------------------------------------------------");
     }
 	
     /**
@@ -72,7 +73,7 @@ public class GanntChart
 	}
         public String display()
         {
-            return " "+(startTime)+"ms   "+(endTime)+"ms   "+eventDescriptor;
+            return (startTime)+"ms   "+(endTime)+"ms   "+eventDescriptor;
         }
     }
 
