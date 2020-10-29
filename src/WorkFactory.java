@@ -17,7 +17,20 @@ public class WorkFactory
     public JobWorkable createWork(String id)
     {
         JobWorker jw = new JobWorker(id);
+        //while(FCFSScheduler.waitOnScheduler)
+        {
+            try
+            {
+                //Thread.currentThread().sleep(100);
+            }
+            catch(Exception e)
+            {
+                //System.out.println("WORKF "+e);
+            }
+        }
+        //System.out.println("WORKF DOING WORK");
         jw.doWork();
+        //FCFSScheduler.waitOnScheduler = true;
         return jw;
         /* 
          * Return a new instance of a class that implements JobWorkable.

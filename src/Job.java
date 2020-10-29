@@ -8,25 +8,25 @@ import java.util.concurrent.locks.Condition;
  * @author Matt Evett
  * @student Sarah Yaw
  * @version 2.1
- * Each instance of this class represents a process running within the virtual 
- * system being simulated by the entire project.
+ * Each instance of this class represents a process running within the virtual system being simulated
+ * by the entire project.
  */
 
 class Job extends Thread 
 {
     private final SystemSimulator myOS; // OS
-    private final Condition myCondition; // This is associated with the OS's 
-  	//single reentrant lock. In my solution each Job has its own Condition 
-  	//that the OS simulator uses to start that Job. When we introduce 
-  	//time-slicing, the Job can be use this to suspend itself, passing 
-        //control back to the OS simulator.
+    private final Condition myCondition; // This is associated with the OS's single reentrant lock
+  				       //In my solution each Job has its own Condition that the OS simulator
+  				       // uses to start that Job.
+  				       // When we introduce time-slicing, the Job can be use this to suspend
+  				       // itself, passing control back to the OS simulator.
   
     private final int burstTime; // job burst time
     private final String name; // name of job
   
     private volatile boolean shouldRun = false; // true if job should be running
     private volatile long startTime; // relativeTime when Job first starts running
-        // You'll need to use this with Gannt chart calculations
+                                    // You'll need to use this with Gannt chart calculations
     private final JobWorkable work;  // What you want your Job to do as its "work".
   
     /*
@@ -77,9 +77,8 @@ class Job extends Thread
   
     /*
     * will be invoked when the burst time has been exhausted.
-    * This is a simple method that sets a flag which will eventually be accessed 
-    * via a call to shouldRun(). I will use a timer object to call this method 
-    * at the appropriate time.
+    * This is a simple method that sets a flag which will eventually be accessed via a call to shouldRun().
+    * I will use a timer object to call this method at the appropriate time.
     */
     synchronized void pleaseStop()
     {
@@ -87,9 +86,8 @@ class Job extends Thread
     }
   
     /*
-    * return name of the job. Note that you can choose to use the inherited 
-    * Thread.getName, but if so, make sure you use the "name" argument 
-    * appropriately in the Job constructor, above.
+    * return name of the job. Note that you can choose to use the inherited Thread.getName, 
+    * but if so, make sure you use the "name" argument appropriately in the Job constructor, above.
     */
     synchronized String getNameOf()
     {
@@ -119,6 +117,7 @@ class Job extends Thread
                 e.printStackTrace();
             }
         }
+		  
         exit();  //exit needs to signal the Condition, and release the lock
     }
   

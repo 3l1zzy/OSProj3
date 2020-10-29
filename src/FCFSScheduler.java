@@ -14,6 +14,7 @@ import java.util.*;
 public class FCFSScheduler extends Scheduler 
 {
     ArrayList<Job> readyq = new ArrayList<Job>();
+    //static boolean waitOnScheduler = true;
     //abstract methods at bottom of class
     
     /**
@@ -33,6 +34,11 @@ public class FCFSScheduler extends Scheduler
 	 */
         if(!hasJobsQueued())
             return false;
+        Thread runner = new Thread(currentlyRunningJob);
+        runner.start();
+        //waitOnScheduler = false;
+        remove(currentlyRunningJob);
+        clearRunningJob();
         return true; // TO_DO ***SHOULDN'T ALWAYS RETURN TRUE***
     }
   
@@ -51,7 +57,7 @@ public class FCFSScheduler extends Scheduler
                 try
                 {           
                     System.out.println("FCFSS WAITING");
-                    Thread.currentThread().sleep(10);
+                    Thread.currentThread().sleep(1000);
                 }
                 catch(Exception e)
                 {
@@ -59,16 +65,14 @@ public class FCFSScheduler extends Scheduler
                 }
             }
             currentlyRunningJob = readyq.get(0);
-            Thread runner = new Thread(currentlyRunningJob);
-            runner.start();
-            System.out.println("FCFSS evidently there is now a job on readyQ");
+            System.out.println("FCFSS evidently there is now a job on readyQ "+currentlyRunningJob.getNameOf());
         }
     }
 
     public void add( Job J )
     {
         readyq.add(J);
-        System.out.println("FCFSS .add() "+J.getNameOf());
+        //System.out.println("FCFSS .add() "+J.getNameOf());
     }
     public void remove( Job J )
     {

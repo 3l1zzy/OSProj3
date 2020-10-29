@@ -16,5 +16,7 @@ public class JobWorker implements JobWorkable
     public void doWork()
     {
         System.out.println(Thread.currentThread().getName()+" JobWorker "+name+" doingWork");
+        //Thread.currentThread().dumpStack();
+        //System.exit(0);//   TEMPORARY
     }
 }
