@@ -16,38 +16,37 @@ class SystemSimulator extends Thread
     private static final int ILLEGAL_TERMINATION = -20;
     private final Scheduler myScheduler; // scheduler for jobs	
     private volatile boolean jobsRemainToBeSubmitted = true; // true if not all jobs have yet been submitted
-    private final ReentrantLock singleThreadMutex;  // Used to guarantee that only one of either the OS or any Job thread is running at any one time.
+    private final ReentrantLock singleThreadMutex;  // Used to guarantee that only
+  	//...one of either the OS or any Job thread is running at any one time.
   
     // Used to store information to create a Gannt chart
     private final GanntChart chart = new GanntChart(); 
   
     public ReentrantLock getSingleThreadMutex() 
     {
-        return singleThreadMutex;
+	return singleThreadMutex;
     }
 
-  
     /**
-    * SystemSimulator() constructor is private to force the use of other constructors.
-    */
+     * SystemSimulator() constructor is private to force the use of other constructors.
+     */
     @SuppressWarnings("unused")
     private SystemSimulator() 
     {
-	myScheduler = null;
-	singleThreadMutex = null;
+        myScheduler = null;
+        singleThreadMutex = null;
     }
 
     public SystemSimulator(Scheduler s)
     {
-	singleThreadMutex = new ReentrantLock();
-	myScheduler = s;
+        singleThreadMutex = new ReentrantLock();
+        myScheduler = s;
     }
 
     /*
-    * The basic structure of this method is straightforward:
-    * the simulator sits in a loop, sleeping. The simulator awakens only when it is interrupted ("poked").
-    */
-
+     * The basic structure of this method is straightforward:
+     * the simulator sits in a loop, sleeping. The simulator awakens only when it is interrupted ("poked").
+     */
     public void run()
     {
         long currentIdleTimeStart; 	// Wall time when current idle period started
@@ -56,7 +55,6 @@ class SystemSimulator extends Thread
 	//The OS thread should be started before any Job thread so it can gain this lock first
         singleThreadMutex.lock();
         chart.start();
-    
     
         // loop while we have jobs left to be scheduled or scheduler has jobs scheduled
         while (jobsRemainToBeSubmitted || myScheduler.hasJobs()) 
@@ -74,26 +72,26 @@ class SystemSimulator extends Thread
             currentIdleTimeEnd = System.currentTimeMillis(); // end idle timer
             if (currentIdleTimeEnd>currentIdleTimeStart)
                 chart.recordEvent(currentIdleTimeStart,currentIdleTimeEnd,"IDLE");
-
+            
+            singleThreadMutex.unlock();
             myScheduler.makeRun();  // the next Job should start running but immediately block on OS mutex lock
             System.out.println("TO_DO Finish SystemSimulator.run()");
             /* Provide code that uses the Job's Condition to block the kernel simulator thread
              * (i.e., the thread that is executing this code).  Use the await() method to do this.
              * This will establish the mutex for the kernel and the Jobs.
              */
-            break;// TEMPORARY
+            singleThreadMutex.lock();
             //Should get to here when that Job completes (calls Exit).
-        } 
-        // exit loop, we have no jobs left and none scheduled
+        } // exit loop, we have no jobs left and none scheduled
         chart.end();
         // print gannt chart
         chart.print();
     }
   
     /*
-    * adds given job, j, to the ready set. Invoked by a Submittor.
-    * Keep in mind that j might not start running immediately, depending on whether another job is already running.
-    */
+     * adds given job, j, to the ready set. Invoked by a Submittor.
+     * Keep in mind that j might not start running immediately, depending on whether another job is already running.
+     */
 
     public void AddNewProcess(String name, String burstDescription, JobWorkable workToDo)
     {
@@ -102,14 +100,14 @@ class SystemSimulator extends Thread
     }
   
     /**
-    * Exit() called by a Job thread to indicate that it is terminating.
-    * This should be the last instruction executed by a Job's run method.
-    * This method is meant to mimic a true system call to exit().
-    * Note that because this method will be invoked by Job, a Thread,
-    * we can use the Thread.getCurrentThread() method to get a reference to the Job that is invoking this method.
-    *
-    * @param jobStart = wall time when Job first started running
-    */
+     * Exit() called by a Job thread to indicate that it is terminating.
+     * This should be the last instruction executed by a Job's run method.
+     * This method is meant to mimic a true system call to exit().
+     * Note that because this method will be invoked by Job, a Thread,
+     * we can use the Thread.getCurrentThread() method to get a reference to the Job that is invoking this method.
+     *
+     * @param jobStart = wall time when Job first started running
+     */
     public void exit()
     {
         // remove job from scheduler, record data into gannt chart
@@ -121,18 +119,18 @@ class SystemSimulator extends Thread
          */
 	  
         // store job gannt data
-	chart.recordEvent( terminatingJob.getStartTime(), System.currentTimeMillis(), terminatingJob.getNameOf() );
+        chart.recordEvent( terminatingJob.getStartTime(), System.currentTimeMillis(), terminatingJob.getNameOf() );
         myScheduler.clearRunningJob(); // remove job from array list
         terminatingJob.getMyCondition().signal(); // This should release the OS to do its thing
         singleThreadMutex.unlock(); // N.B. this code is only executed by a Job thread
     }
 
     /*
-    * public noMoreJobsToSubmit() called by the Submittor when the last Job has been submitted.
-    * The simulator should use this information to eventually terminate when all Jobs have finished.
-    */
-    public void noMoreJobsToSubmit()
+     * public noMoreJobsToSubmit() called by the Submittor when the last Job has been submitted.
+     * The simulator should use this information to eventually terminate when all Jobs have finished.
+     */
+     public void noMoreJobsToSubmit()
     {
-	jobsRemainToBeSubmitted = false;
+        jobsRemainToBeSubmitted = false;
     }
 }

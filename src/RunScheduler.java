@@ -12,7 +12,6 @@ import java.util.*;
 
 public class RunScheduler 
 {
-
     private final static String INPUT_FILE_NAME = "scheduleInput.txt"; // filename
 
     public static void main(String[] args) 
