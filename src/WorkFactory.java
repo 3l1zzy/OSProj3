@@ -15,8 +15,6 @@ public class WorkFactory
     public JobWorkable createWork(String id)
     {
         JobWorker jw = new JobWorker(id);
-        //System.out.println("WORKF DOING WORK");
-        //jw.doWork();
         return jw;
         /* 
          * Return a new instance of a class that implements JobWorkable.
