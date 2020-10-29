@@ -14,12 +14,8 @@ import java.util.*;
 public class FCFSScheduler extends Scheduler 
 {
     ArrayList<Job> readyq = new ArrayList<Job>();
-    /*
-    * TO_DO: your data structure to support a FCFS scheduler
-    * and the abstract methods of Scheduler
-    */
+    //abstract methods at bottom of class
     
- 
     /**
     * If the ready queue is empty, return false.
     * Otherwise, start the next job in the queue, returning true.  If the queue is empty
@@ -37,8 +33,6 @@ public class FCFSScheduler extends Scheduler
 	 */
         if(!hasJobsQueued())
             return false;
-        currentlyRunningJob = readyq.get(0);
-        //currentlyRunningJob.start();
         return true; // TO_DO ***SHOULDN'T ALWAYS RETURN TRUE***
     }
   
@@ -50,20 +44,25 @@ public class FCFSScheduler extends Scheduler
     {
         if (!readyq.isEmpty()) 
             return;
-        System.out.println("FCFSS blockTilThereIsAJob");
-        while(readyq.isEmpty())
+        else
         {
-            try
-            {           
-                System.out.println("FCFSS WAITING");
-                Thread.currentThread().sleep(100);
-            }
-            catch(Exception e)
+            while(readyq.isEmpty())
             {
-                System.out.println("FCFSS "+e);
+                try
+                {           
+                    System.out.println("FCFSS WAITING");
+                    Thread.currentThread().sleep(10);
+                }
+                catch(Exception e)
+                {
+                    System.out.println("FCFSS "+e);
+                }
             }
+            currentlyRunningJob = readyq.get(0);
+            Thread runner = new Thread(currentlyRunningJob);
+            runner.start();
+            System.out.println("FCFSS evidently there is now a job on readyQ");
         }
-        System.out.println("FCFSS evidently there is now a job on readyQ");
     }
 
     public void add( Job J )
