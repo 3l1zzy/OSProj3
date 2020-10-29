@@ -20,7 +20,7 @@ public class FCFSScheduler extends Scheduler
     public void add( Job J )
     {
         readyq.add(J);        
-        System.out.println("FCFSS add "+J.getNameOf());
+        //System.out.println("FCFSS add "+J.getNameOf());
     }
 
     /**
@@ -35,7 +35,7 @@ public class FCFSScheduler extends Scheduler
             i++;
         }
         readyq.remove(i);
-        System.out.println("FCFSS remove "+J.getNameOf());
+        //System.out.println("FCFSS remove "+J.getNameOf());
     }
 
     /**
@@ -60,18 +60,14 @@ public class FCFSScheduler extends Scheduler
      */
     public boolean makeRun()
     {
-        System.out.println("FCFSS MakeRun");
-        /*
-         * Place code here that gets the next Job from the ready queue and
-         * invokes start() on it
-         *
-         */
+        //System.out.println("FCFSS MakeRun");
+        //Place code here that gets the next Job from the ready queue and invokes start() on it
         if(!hasJobsQueued())
             return false;
         else
         {
             remove(currentlyRunningJob);
-            currentlyRunningJob.start();
+            currentlyRunningJob.start();//Thread.currentThread().dumpStack();
             return true; // TO_DO ***SHOULDN'T ALWAYS RETURN TRUE***
         }
     }
@@ -91,7 +87,7 @@ public class FCFSScheduler extends Scheduler
             try
             {
                 Thread.currentThread().sleep(100);
-                System.out.println("FCFSS Wait");
+                //System.out.println("FCFSS Wait");
             }
             catch (Exception e)
             {
@@ -99,6 +95,6 @@ public class FCFSScheduler extends Scheduler
             }
         }
         currentlyRunningJob = readyq.get(0);
-        System.out.println("evidently there is now a job on readyQ "+currentlyRunningJob.getNameOf());
+        //System.out.println("evidently there is now a job on readyQ "+currentlyRunningJob.getNameOf());
     }
 }

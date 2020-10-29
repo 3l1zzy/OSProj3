@@ -73,13 +73,24 @@ class SystemSimulator extends Thread
             if (currentIdleTimeEnd>currentIdleTimeStart)
                 chart.recordEvent(currentIdleTimeStart,currentIdleTimeEnd,"IDLE");
             
-            singleThreadMutex.unlock();
             myScheduler.makeRun();  // the next Job should start running but immediately block on OS mutex lock
-            System.out.println("TO_DO Finish SystemSimulator.run()");
+            
             /* Provide code that uses the Job's Condition to block the kernel simulator thread
              * (i.e., the thread that is executing this code).  Use the await() method to do this.
              * This will establish the mutex for the kernel and the Jobs.
              */
+            synchronized(myScheduler.getRunningJob().getMyCondition())
+            {
+                try
+                {
+                    myScheduler.getRunningJob().getMyCondition().await();
+                }
+                catch(Exception e)
+                {
+                    System.out.println("SYSIM "+e);
+                    e.printStackTrace();
+                }
+            }
             singleThreadMutex.lock();
             //Should get to here when that Job completes (calls Exit).
         } // exit loop, we have no jobs left and none scheduled
@@ -92,7 +103,6 @@ class SystemSimulator extends Thread
      * adds given job, j, to the ready set. Invoked by a Submittor.
      * Keep in mind that j might not start running immediately, depending on whether another job is already running.
      */
-
     public void AddNewProcess(String name, String burstDescription, JobWorkable workToDo)
     {
         Job newJob = new Job(burstDescription, this, name, workToDo);

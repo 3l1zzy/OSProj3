@@ -38,13 +38,13 @@ public class GanntChart
 	
     public void print() 
     {
-        System.out.println("GANNT CHART:-------------------------");
-        System.out.println("BurstStart     BurstEnd      JOB ");
+        System.out.println("GANNT CHART:------------------------------");
+        System.out.println("BurstStart\tBurstEnd\tJOB ");
         for(int i = 0; i<events.size(); i++)
         {
-            System.out.println(events.get(i).startTime+"  "+events.get(i).endTime+" "+events.get(i).eventDescriptor);
+            System.out.println((events.get(i).startTime-systemStartTime)+"\t\t"+(events.get(i).endTime-systemStartTime)+"\t\t"+events.get(i).eventDescriptor);
         }
-        System.out.println("--------------------------------------");
+        System.out.println("-------------------------------------------");
     }
 	
     /**

@@ -104,7 +104,6 @@ class Job extends Thread
     {
         //Should block here until the OS blocks itself on this Job's Condition
         myOS.getSingleThreadMutex().lock();
-	System.out.println("JOB "+name+" is running"); 
         startTime = System.currentTimeMillis();
         while (System.currentTimeMillis()-startTime < burstTime) 
         {// Not yet exhausted my run-time

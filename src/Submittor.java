@@ -58,7 +58,6 @@ class Submittor extends Thread
             int delay; // msec delay until this Job is submitted to the kernel
             String burstDescription;  // The description of that Job.  (For FCFS this will be a single integer token)
     	
-            System.out.println("TO_DO Complete Submittor.run()");
             //Provide code that will set id, delay, and burstDescription from jobDesc.
             id = "Job#"+temparr[0];
             delay = Integer.parseInt(temparr[1]);
@@ -72,7 +71,8 @@ class Submittor extends Thread
     		System.err.println("Submittor should never be interrupted");
     		e.printStackTrace();
             }
-            // create jobs and add them to the Operating System
+            // create jobs and add them to the Operating System            
+            //System.out.println("SUBMI sending "+id);
             mySystem.AddNewProcess(id, burstDescription, myWorkCreator.createWork(id));
         }
         mySystem.noMoreJobsToSubmit(); // let system know that no more jobs are coming
